@@ -24,3 +24,11 @@ resource "aws_subnet" "exam_public_subnet" {
     "Created"="terraform"
   }
 }
+
+resource "aws_internet_gateway" "exam_ig" {
+  vpc_id = aws_vpc.exam_vpc.id
+  tags = {
+    "Name"="Internet Gateway"
+    "Created"="terraform"
+  }
+}
