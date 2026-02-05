@@ -35,8 +35,14 @@ resource "aws_internet_gateway" "exam_ig" {
 
 resource "aws_route_table" "exam_rt" {
   vpc_id = aws_vpc.exam_vpc.id
-  route{
+
+  route {
     cidr_block = var.route_table_cidr
     gateway_id = aws_internet_gateway.exam_ig.id
+  }
+  
+  tags = {
+    "Name"    = "Exam Route Table"
+    "Created" = "terraform"
   }
 }
