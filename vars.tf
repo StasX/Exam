@@ -25,3 +25,8 @@ variable "private_subnet_cidr" {
   type    = string
   default = "10.0.2.0/24"
 }
+
+variable "route_table_cidr" {
+  type    = string
+  default = "0.0.0.0/0"
+}
