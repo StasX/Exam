@@ -9,7 +9,7 @@ resource "aws_vpc" "exam_vpc" {
 #-----------------------------------------------
 
 # Subnets
-resource "aws_subnet" "exam_private_subnet" {
+resource "aws_subnet" "private_subnet" {
   vpc_id     = aws_vpc.exam_vpc.id
   cidr_block = var.private_subnet_cidr
   tags = {
@@ -18,7 +18,7 @@ resource "aws_subnet" "exam_private_subnet" {
   }
 }
 
-resource "aws_subnet" "exam_public_subnet" {
+resource "aws_subnet" "public_subnet" {
   vpc_id                  = aws_vpc.exam_vpc.id
   cidr_block              = var.public_subnet_cidr
   map_public_ip_on_launch = true
@@ -49,7 +49,14 @@ resource "aws_route_table" "exam_rt" {
   }
 
   tags = {
-    "Name"    = "Exam Route Table"
+    "Name"    = "Public Route Table"
     "Created" = "terraform"
   }
+}
+#-----------------------------------------------
+
+# Rouute Table Association
+resource "aws_route_table_association" "public_assoc" {
+  subnet_id = aws_subnet.public_subnet.id
+  route_table_id = aws_route_table.exam_rt.id
 }
