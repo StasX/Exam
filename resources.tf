@@ -1,3 +1,4 @@
+# VPC
 resource "aws_vpc" "exam_vpc" {
   cidr_block = var.vpc_cidr_block
   tags = {
@@ -5,7 +6,9 @@ resource "aws_vpc" "exam_vpc" {
     "Created" = "terraform"
   }
 }
+#-----------------------------------------------
 
+# Subnets
 resource "aws_subnet" "exam_private_subnet" {
   vpc_id     = aws_vpc.exam_vpc.id
   cidr_block = var.private_subnet_cidr
@@ -24,7 +27,9 @@ resource "aws_subnet" "exam_public_subnet" {
     "Created" = "terraform"
   }
 }
+#-----------------------------------------------
 
+# Internet Gateway
 resource "aws_internet_gateway" "exam_ig" {
   vpc_id = aws_vpc.exam_vpc.id
   tags = {
@@ -32,7 +37,9 @@ resource "aws_internet_gateway" "exam_ig" {
     "Created" = "terraform"
   }
 }
+#-----------------------------------------------
 
+# Rouute Table
 resource "aws_route_table" "exam_rt" {
   vpc_id = aws_vpc.exam_vpc.id
 
@@ -40,7 +47,7 @@ resource "aws_route_table" "exam_rt" {
     cidr_block = var.route_table_cidr
     gateway_id = aws_internet_gateway.exam_ig.id
   }
-  
+
   tags = {
     "Name"    = "Exam Route Table"
     "Created" = "terraform"
