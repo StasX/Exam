@@ -39,8 +39,8 @@ resource "aws_internet_gateway" "exam_ig" {
 }
 #-----------------------------------------------
 
-# Rouute Table
-resource "aws_route_table" "exam_rt" {
+# Rouute Tables
+resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.exam_vpc.id
 
   route {
@@ -50,6 +50,20 @@ resource "aws_route_table" "exam_rt" {
 
   tags = {
     "Name"    = "Public Route Table"
+    "Created" = "terraform"
+  }
+}
+
+resource "aws_route_table" "private_rt" {
+  vpc_id = aws_vpc.exam_vpc.id
+
+  route {
+    cidr_block = var.route_table_cidr
+    gateway_id = aws_internet_gateway.exam_ig.id
+  }
+
+  tags = {
+    "Name"    = "Private Route Table"
     "Created" = "terraform"
   }
 }
